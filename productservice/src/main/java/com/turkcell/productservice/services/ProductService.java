@@ -1,7 +1,8 @@
 package com.turkcell.productservice.services;
 
 import com.turkcell.productservice.dto.requests.CreateProductRequest;
+import com.turkcell.productservice.dto.responses.CreatedProductResponse;
 
 public interface ProductService {
-    CreateProductRequest add(CreateProductRequest request);
+    CreatedProductResponse add(CreateProductRequest request);
 }
