@@ -27,4 +27,8 @@ public class ProductsController {
         return productService.getByInventoryCode(invCode, requiredStock);
 
     }
+    @PostMapping("deneme")
+    public String deneme(){
+        return "Deneme";
+    }
 }
