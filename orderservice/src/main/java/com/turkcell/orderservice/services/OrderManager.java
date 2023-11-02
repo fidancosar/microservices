@@ -18,7 +18,8 @@ public class OrderManager implements OrderService{
     public Boolean submitOrders(List<CreateOrderRequest> requests) {
         for (CreateOrderRequest request : requests){
             Boolean hasStock = webClientBuilder.build()
-                    .get().uri("http://localhost:8083/api/v1/products/check-stock",
+                    .get()
+                    .uri("http://localhost:8083/api/v1/products/check-stock",
                             (uriBuilder) -> uriBuilder
                                     .queryParam("invCode", request.getInventoryCode())
                                     .queryParam("requiredStock", request.getStockAmount())
