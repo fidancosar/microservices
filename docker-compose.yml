@@ -4,6 +4,14 @@ services:
     ports:
       -8761:8761
     mem_limit: 700m
+<<<<<<< HEAD
+=======
+  orderservice:
+    image: deneme
+    ports:
+      - 8181:8181
+      - mem_limit: 1000m
+>>>>>>> origin/main
   keycloak:
     image: quay.io/keycloak/keycloak
     ports:
