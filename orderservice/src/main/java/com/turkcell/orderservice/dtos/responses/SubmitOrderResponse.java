@@ -1,16 +1,16 @@
 package com.turkcell.orderservice.dtos.responses;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreatedOrderResponse {
+@Builder
+public class SubmitOrderResponse {
     private String inventoryCode;
-    private String hasStock;
+    private Boolean hasStock;
     private Integer stockAmount;
 
 }

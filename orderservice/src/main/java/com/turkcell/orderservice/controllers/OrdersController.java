@@ -1,16 +1,17 @@
 package com.turkcell.orderservice.controllers;
 
 import com.turkcell.orderservice.dtos.requests.CreateOrderRequest;
+import com.turkcell.orderservice.dtos.responses.SubmitOrderResponse;
 import com.turkcell.orderservice.services.OrderService;
+import java.util.Collections;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.retry.annotation.CircuitBreaker;
+import org.springframework.web.bind.annotation.*;
 
+
+import javax.xml.namespace.QName;
+import java.util.Collections;
 import java.util.List;
 
 @RequestMapping("api/v1/orders")
@@ -19,16 +20,15 @@ import java.util.List;
 public class OrdersController {
     private final OrderService orderService;
 
-    private final WebClient.Builder webClientBuilder;
 
-    @PostMapping
-    public ResponseEntity<Boolean> submitOrders(@RequestBody List<CreateOrderRequest> requests) {
-        Boolean allStockAvailable = orderService.submitOrders(requests);
+    @PostMapping("/submit-order")
+    @CircuitBreaker
+    public List<SubmitOrderResponse> submitOrder(@RequestBody List<CreateOrderRequest> requests) {
+        return orderService.submitOrder(requests);
+    }
 
-        if (allStockAvailable) {
-            return new ResponseEntity<>(true, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
-        }
+    private List<SubmitOrderResponse> fallbackSubmitOrder(Exception e) {
+
+        return Collections.emptyList();
     }
 }
